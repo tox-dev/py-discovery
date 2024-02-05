@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from abc import ABCMeta, abstractmethod
+from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from py_discovery import PythonInfo
 
 
-class Discover(metaclass=ABCMeta):
+class Discover(ABC):
     """Discover and provide the requested Python interpreter."""
 
     @classmethod
