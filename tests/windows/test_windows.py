@@ -119,7 +119,7 @@ def test_propose_interpreters(string_spec: str, expected_exe: str, mocker: Mocke
 
 
 def _mock_pyinfo(major: int | None, minor: int | None, arch: int | None, exe: str) -> PythonInfo:
-    """Return PythonInfo objects with essential metadata set for the given args"""
+    """Return PythonInfo objects with essential metadata set for the given args."""
     info = PythonInfo()
     info.base_prefix = str(Path(exe).parent)
     info.executable = info.original_executable = info.system_executable = exe

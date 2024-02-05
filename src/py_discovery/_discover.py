@@ -18,6 +18,7 @@ class Discover(metaclass=ABCMeta):
         Add CLI arguments for this discovery mechanisms.
 
         :param parser: The CLI parser.
+
         """
         raise NotImplementedError
 
@@ -26,6 +27,7 @@ class Discover(metaclass=ABCMeta):
         Create a new discovery mechanism.
 
         :param options: The parsed options as defined within the :meth:`add_parser_arguments`.
+
         """
         self._has_run = False
         self._interpreter: PythonInfo | None = None
@@ -37,6 +39,7 @@ class Discover(metaclass=ABCMeta):
         Discovers an interpreter.
 
         :return: The interpreter ready to use for virtual environment creation
+
         """
         raise NotImplementedError
 

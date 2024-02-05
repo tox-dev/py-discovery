@@ -2,6 +2,7 @@
 The PythonInfo contains information about a concrete instance of a Python interpreter.
 
 Note: this file is also used to query target interpreters, so can only use standard library methods
+
 """
 
 from __future__ import annotations
@@ -20,7 +21,7 @@ from pathlib import Path
 from random import choice
 from shlex import quote
 from string import ascii_lowercase, ascii_uppercase, digits
-from subprocess import PIPE, Popen
+from subprocess import PIPE, Popen  # noqa: S404
 from tempfile import NamedTemporaryFile
 from typing import TYPE_CHECKING, Any, Iterator, Mapping, MutableMapping
 
@@ -152,7 +153,7 @@ class PythonInfo:
     def _fast_get_system_executable(self) -> str | None:
         """Try to get the system executable by just looking at properties."""
         # if this is a virtual environment
-        if self.real_prefix or self.base_prefix is not None and self.base_prefix != self.prefix:
+        if self.real_prefix or (self.base_prefix is not None and self.base_prefix != self.prefix):  # noqa: PLR1702
             if self.real_prefix is None:
                 # some platforms may set this to help us
                 base_executable: str | None = getattr(sys, "_base_executable", None)
@@ -196,8 +197,8 @@ class PythonInfo:
         with warnings.catch_warnings():  # disable warning for PEP-632
             warnings.simplefilter("ignore")
             try:
-                from distutils import dist
-                from distutils.command.install import SCHEME_KEYS
+                from distutils import dist  # noqa: PLC0415
+                from distutils.command.install import SCHEME_KEYS  # noqa: PLC0415
             except ImportError:  # if removed or not installed ignore
                 return {}
 
@@ -274,9 +275,6 @@ class PythonInfo:
         res = self.real_prefix or self.base_exec_prefix or self.exec_prefix
         assert res is not None  # noqa: S101
         return res
-
-    def __unicode__(self) -> str:
-        return repr(self)
 
     def __repr__(self) -> str:
         return "{}({!r})".format(
@@ -357,6 +355,7 @@ class PythonInfo:
         Locate the current host interpreter information.
 
         This might be different than what we run into in case the host python has been upgraded from underneath us.
+
         """
         if cls._current is None:
             cls._current = cls.from_exe(sys.executable, raise_on_error=True, resolve_to_host=False)
@@ -369,6 +368,7 @@ class PythonInfo:
         Locate the current host interpreter information.
 
         This might be different than what we run into in case the host python has been upgraded from underneath us.
+
         """
         if cls._current_system is None:
             cls._current_system = cls.from_exe(sys.executable, raise_on_error=True, resolve_to_host=True)
@@ -380,7 +380,7 @@ class PythonInfo:
         return json.dumps(self._to_dict(), indent=2)
 
     def _to_dict(self) -> dict[str, Any]:
-        data = {var: (getattr(self, var) if var not in ("_creators",) else None) for var in vars(self)}
+        data = {var: (getattr(self, var) if var != "_creators" else None) for var in vars(self)}
 
         data["version_info"] = data["version_info"]._asdict()  # namedtuple to dictionary
         return data
@@ -683,10 +683,10 @@ class LogCmd:
 
 
 __all__ = [
+    "EXTENSIONS",
     "PythonInfo",
     "VersionInfo",
     "fs_is_case_sensitive",
-    "EXTENSIONS",
 ]
 
 

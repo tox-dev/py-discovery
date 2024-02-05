@@ -110,7 +110,7 @@ def propose_interpreters(  # noqa: C901, PLR0912
 
         # 3. otherwise fallbacks to platform default logic
         if sys.platform == "win32":
-            from ._windows import propose_interpreters
+            from ._windows import propose_interpreters  # noqa: PLC0415
 
             for interpreter in propose_interpreters(spec, env):
                 yield interpreter, True
@@ -184,11 +184,11 @@ def possible_specs(spec: PythonSpec) -> Iterator[tuple[str, bool]]:
 
 
 class PathPythonInfo(PythonInfo):
-    """python info from a path."""
+    """Python info from a path."""
 
 
 __all__ = [
-    "get_interpreter",
     "Builtin",
     "PathPythonInfo",
+    "get_interpreter",
 ]

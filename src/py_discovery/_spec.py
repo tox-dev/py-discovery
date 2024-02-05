@@ -15,7 +15,7 @@ PATTERN = re.compile(r"^(?P<impl>[a-zA-Z]+)?(?P<version>[0-9.]+)?(?:-(?P<arch>32
 class PythonSpec:
     """Contains specification about a Python Interpreter."""
 
-    def __init__(  # noqa: PLR0913
+    def __init__(  # noqa: PLR0913, PLR0917
         self,
         str_spec: str | None,
         implementation: str | None,
@@ -36,7 +36,7 @@ class PythonSpec:
     @classmethod
     def from_string_spec(cls, string_spec: str) -> PythonSpec:  # noqa: C901, PLR0912
         impl, major, minor, micro, arch, path = None, None, None, None, None, None
-        if os.path.isabs(string_spec):  # noqa: PTH117
+        if os.path.isabs(string_spec):  # noqa: PTH117, PLR1702
             path = string_spec
         else:
             ok = False

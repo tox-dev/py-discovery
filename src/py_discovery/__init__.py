@@ -1,4 +1,5 @@
 """Python discovery."""
+
 from __future__ import annotations
 
 from ._builtin import Builtin, PathPythonInfo, get_interpreter
@@ -10,12 +11,12 @@ from ._version import version
 __version__ = version  #: version of the package
 
 __all__ = [
-    "PythonInfo",
-    "VersionInfo",
-    "PythonSpec",
-    "Discover",
     "Builtin",
+    "Discover",
     "PathPythonInfo",
-    "get_interpreter",
+    "PythonInfo",
+    "PythonSpec",
+    "VersionInfo",
     "__version__",
+    "get_interpreter",
 ]

@@ -160,7 +160,7 @@ def test_system_executable_no_exact_match(  # noqa: PLR0913
     mocker: MockerFixture,
     caplog: pytest.LogCaptureFixture,
 ) -> None:
-    """Here we should fallback to other compatible"""
+    """Here we should fallback to other compatible."""
     caplog.set_level(logging.DEBUG)
 
     def _make_py_info(of: PyInfoMock) -> PythonInfo:

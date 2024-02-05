@@ -47,8 +47,7 @@ else:  # pragma: win32 no cover
             exc_type: type[BaseException] | None,
             exc_value: BaseException | None,
             traceback: TracebackType | None,
-        ) -> bool | None:
-            ...
+        ) -> bool | None: ...
 
     def EnumKey(__key: _KeyType, __index: int) -> str:  # noqa: N802
         return ""
