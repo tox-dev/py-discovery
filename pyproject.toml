@@ -66,11 +66,11 @@ build.hooks.vcs.version-file = "src/py_discovery/_version.py"
 version.source = "vcs"
 
 [tool.ruff]
-select = ["ALL"]
 line-length = 120
 target-version = "py37"
-isort = { known-first-party = ["py_discovery"], required-imports = ["from __future__ import annotations"] }
-ignore = [
+lint.isort = { known-first-party = ["py_discovery"], required-imports = ["from __future__ import annotations"] }
+lint.select = ["ALL"]
+lint.ignore = [
   "INP001", # no implicit namespaces here
   "ANN101", # Missing type annotation for `self` in method
   "ANN102", # Missing type annotation for `cls` in classmethod"
@@ -79,9 +79,13 @@ ignore = [
   "D212",   # `multi-line-summary-first-line` (D212) and `multi-line-summary-second-line` (D213) are incompatible
   "S104",   # Possible binding to all interfaces
   "CPY",    # no copyright
+  "COM812", # Conflict with formatter
+  "ISC001", # Conflict with formatter
 ]
-format.preview = true
 lint.preview = true
+format.preview = true
+format.docstring-code-format = true
+format.docstring-code-line-length = 100
 [tool.ruff.per-file-ignores]
 "tests/**/*.py" = [
   "S101",    # asserts allowed in tests
@@ -99,13 +103,6 @@ lint.preview = true
 builtin = "clear,usage,en-GB_to_en-US"
 count = true
 quiet-level = 3
-
-[tool.docformatter]
-blank = true
-recursive = true
-pre-summary-newline = true
-wrap-descriptions = 120
-wrap-summaries = 120
 
 [tool.coverage]
 report.fail_under = 87
