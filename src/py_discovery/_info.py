@@ -135,8 +135,7 @@ class PythonInfo:
 
         config_var_keys = set()
         for element in self.sysconfig_paths.values():
-            for k in _CONF_VAR_RE.findall(element):
-                config_var_keys.add(k[1:-1])
+            config_var_keys.update(k[1:-1] for k in _CONF_VAR_RE.findall(element))
         config_var_keys.add("PYTHONFRAMEWORK")
 
         self.sysconfig_vars = {i: sysconfig.get_config_var(i or "") for i in config_var_keys}
@@ -666,7 +665,7 @@ def _run_subprocess(cls: type[PythonInfo], exe: str, env: MutableMapping[str, st
         result.executable = exe  # keep the original executable as this may contain initialization code
         return result
 
-    msg = f"{exe} with code {code}{f' out: {out!r}' if out else ''}{f' err: {err!r}' if err else ''}"
+    msg = f"{exe} with code {code}{f' out: {out!r}' if out else ''}{f" err: {err!r}" if err else ''}"
     return RuntimeError(f"failed to query {msg}")
 
 
