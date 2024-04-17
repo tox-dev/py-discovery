@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 class Builtin(Discover):
     def __init__(self, options: Namespace) -> None:
         super().__init__(options)
-        self.python_spec = options.python if options.python else [sys.executable]
+        self.python_spec = options.python or [sys.executable]
         self.try_first_with = options.try_first_with
 
     @classmethod
