@@ -402,7 +402,7 @@ class PythonInfo:
         if isinstance(proposed, PythonInfo) and resolve_to_host:
             try:
                 proposed = proposed._resolve_to_system(proposed)  # noqa: SLF001
-            except Exception as exception:  # noqa: BLE001
+            except Exception as exception:
                 if raise_on_error:
                     raise
                 logging.info("ignore %s due cannot resolve system due to %r", proposed.original_executable, exception)
