@@ -31,7 +31,7 @@ jobs:
         os:
           - ubuntu-latest
           - windows-latest
-          - macos-latest
+          - macos-13
     steps:
       - name: Setup python for tox
         uses: actions/setup-python@v5
