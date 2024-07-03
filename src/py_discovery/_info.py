@@ -630,7 +630,7 @@ def _run_subprocess(  # noqa: PLR0914
     logging.debug("get interpreter info via cmd: %s", LogCmd(cmd))
     try:
         process = Popen(
-            cmd,  # noqa: S603
+            cmd,
             universal_newlines=True,
             stdin=PIPE,
             stderr=PIPE,

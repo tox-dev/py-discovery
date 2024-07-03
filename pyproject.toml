@@ -89,6 +89,7 @@ lint.ignore = [
   "INP001", # no implicit namespaces here
   "ISC001", # Conflict with formatter
   "S104",   # Possible binding to all interfaces
+  "S603",   # `subprocess` call: check for execution of untrusted input
 ]
 lint.per-file-ignores."tests/**/*.py" = [
   "D",       # don't care about documentation in tests
@@ -99,7 +100,6 @@ lint.per-file-ignores."tests/**/*.py" = [
   "PLR0917", # too many positional arguments
   "PLR2004", # Magic value used in comparison, consider replacing with a constant variable
   "S101",    # asserts allowed in tests
-  "S603",    # `subprocess` call: check for execution of untrusted input
 ]
 lint.isort = { known-first-party = [
   "py_discovery",
