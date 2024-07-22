@@ -496,7 +496,7 @@ class PythonInfo:
         msg = "failed to detect {} in {}".format("|".join(possible_names), os.pathsep.join(possible_folders))
         raise RuntimeError(msg)
 
-    def _check_exe(  # noqa: PLR0913
+    def _check_exe(
         self,
         folder: str,
         name: str,

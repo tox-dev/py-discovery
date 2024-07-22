@@ -22,7 +22,7 @@ if TYPE_CHECKING:
         from typing_extensions import Self
 
 
-@pytest.fixture()
+@pytest.fixture
 def _mock_registry(mocker: MockerFixture) -> None:  # noqa: C901
     loc: dict[str, Any] = {}
     glob: dict[str, Any] = {}
