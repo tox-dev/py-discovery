@@ -15,11 +15,11 @@ repos:
       - id: tox-ini-fmt
         args: ["-p", "fix"]
   - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: "2.1.4"
+    rev: "2.2.1"
     hooks:
       - id: pyproject-fmt
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.5.4"
+    rev: "v0.6.3"
     hooks:
       - id: ruff-format
       - id: ruff
