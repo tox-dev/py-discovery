@@ -511,3 +511,17 @@ def test_select_most_likely_prefers_machine_match(
         d.sysconfig_platform = plat
     result = PythonInfo._select_most_likely(discovered, target)
     assert result.sysconfig_platform == discovered_platforms[expected_idx]
+
+
+@pytest.mark.parametrize(
+    ("system_executable", "expected"),
+    [
+        pytest.param("/usr/bin/python3", "/usr/bin/python3", id="resolved"),
+        pytest.param(None, "/venv/bin/python", id="unresolved falls back to executable"),
+    ],
+)
+def test_py_info_system_exe(system_executable: str | None, expected: str) -> None:
+    info = copy.deepcopy(CURRENT)
+    info.executable = "/venv/bin/python"
+    info.system_executable = system_executable
+    assert info.system_exe == expected

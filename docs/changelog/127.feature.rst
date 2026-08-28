@@ -1,0 +1,5 @@
+:attr:`~python_discovery.PythonInfo.system_exe` returns the executable of the system Python an interpreter is based on,
+falling back to :attr:`~python_discovery.PythonInfo.executable` the way
+:meth:`~python_discovery.PythonInfo.resolve_to_system` does. :attr:`~python_discovery.PythonInfo.system_executable` is
+``None`` until resolution runs, so every consumer had to narrow a value discovery has already settled - by
+:user:`gaborbernat`.

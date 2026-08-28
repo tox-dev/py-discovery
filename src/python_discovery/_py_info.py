@@ -167,6 +167,17 @@ class PythonInfo:  # ruff:ignore[too-many-public-methods]
         """The exec prefix of the system Python this interpreter is based on."""
         return self.real_prefix or self.base_exec_prefix or self.exec_prefix
 
+    @property
+    def system_exe(self) -> str:
+        """
+        The executable of the system Python this interpreter is based on.
+
+        :attr:`system_executable` stays ``None`` until :meth:`resolve_to_system` walks the prefix chain, so reading it
+        forces every caller to narrow a value discovery has already settled. The fallback here matches what resolution
+        itself writes when a prefix links back to its own interpreter.
+        """
+        return self.system_executable or self.executable
+
     def __repr__(self) -> str:
         return "{}({!r})".format(
             self.__class__.__name__,
