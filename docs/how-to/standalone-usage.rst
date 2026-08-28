@@ -145,7 +145,8 @@ Once you have a :class:`~python_discovery.PythonInfo`, you can inspect everythin
     classDiagram
         class PythonInfo {
             +executable: str
-            +system_executable: str
+            +system_exe: str
+            +system_executable: str | None
             +implementation: str
             +version_info: VersionInfo
             +architecture: int
@@ -167,7 +168,7 @@ Once you have a :class:`~python_discovery.PythonInfo`, you can inspect everythin
    info = get_interpreter("python3.12", cache=cache)
 
    info.executable           # Resolved path to the binary.
-   info.system_executable    # The underlying system interpreter (outside any venv).
+   info.system_exe           # The underlying system interpreter (outside any venv).
    info.implementation       # "CPython", "PyPy", "GraalPy", etc.
    info.version_info         # VersionInfo(major, minor, micro, releaselevel, serial).
    info.architecture         # 64 or 32.
@@ -177,6 +178,13 @@ Once you have a :class:`~python_discovery.PythonInfo`, you can inspect everythin
    info.debug_build          # True if this is a Py_DEBUG build.
    info.sysconfig_vars       # All sysconfig.get_config_vars() values.
    info.sysconfig_paths      # All sysconfig.get_paths() values.
+
+Prefer :attr:`~python_discovery.PythonInfo.system_exe` over the raw
+:attr:`~python_discovery.PythonInfo.system_executable` field it reads. The field is typed ``str | None`` because it
+holds nothing until resolution runs, so a type checker makes you narrow it at every use even though discovery has
+filled it in by the time you hold a :class:`~python_discovery.PythonInfo`. Read the raw field only when you build a
+:class:`~python_discovery.PythonInfo` yourself, or call
+:meth:`~python_discovery.PythonInfo.from_exe` with ``resolve_to_host=False``, and want to tell the two states apart.
 
 Implement a custom cache backend
 -----------------------------------

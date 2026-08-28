@@ -186,7 +186,7 @@ APIs whenever a spec is given.
 
 **Deduplication.** :func:`~python_discovery.get_interpreter` deduplicates per call so it does not interrogate the
 same binary twice while searching, and stops as soon as a match is found. :func:`~python_discovery.iter_interpreters`
-deduplicates by the resolved real path of each candidate's ``system_executable`` (falling back to ``executable``).
+deduplicates by the resolved real path of each candidate's :attr:`~python_discovery.PythonInfo.system_exe`.
 That means symlinked aliases like ``/bin/python3`` and ``/usr/bin/python3``, or a virtualenv whose ``python``
 symlinks to its base interpreter, collapse to a single yield. The semantic is "one entry per distinct install,"
 which is what callers building choosers or version-range pickers usually want.
@@ -197,6 +197,40 @@ then :pep:`514` entries on Windows, then PATH left-to-right, then UV-managed ins
 version first, smallest install root, etc.), wrap the call in :func:`sorted` -- the API deliberately does not
 include a ``sort_by`` parameter because keeping discovery order preserves the priority signal for callers who
 want it.
+
+Resolving a virtual environment to its base
+--------------------------------------------
+
+A :class:`~python_discovery.PythonInfo` reaches you in one of two states, and the difference shows up in a single
+field.
+
+Collection fills in :attr:`~python_discovery.PythonInfo.system_executable` by inspection alone, which works whenever
+the interpreter is not in a virtual environment or names its base outright. When inspection comes up short the field
+holds ``None``, and :meth:`~python_discovery.PythonInfo.resolve_to_system` walks the prefix chain a layer at a time,
+interrogating each prefix until it reaches a real install. Every discovery entry point runs that walk, so an
+interpreter you got from :func:`~python_discovery.get_interpreter`,
+:func:`~python_discovery.iter_interpreters` or :meth:`~python_discovery.PythonInfo.from_exe` is resolved before you
+see it.
+
+.. mermaid::
+
+    flowchart TD
+        Collect["collection<br>system_executable = None"] --> Walk["resolve_to_system()<br>walk prefix chain"]
+        Walk --> Done["system_executable set"]
+        Collect -- "base named outright" --> Done
+        Done --> Read["system_exe"]
+
+        style Collect fill:#ffe3a3,stroke:#d29200,color:#3a2c00
+        style Walk fill:#4a90d9,stroke:#2a5f8f,color:#fff
+        style Done fill:#4a9f4a,stroke:#2a6f2a,color:#fff
+        style Read fill:#4a9f4a,stroke:#2a6f2a,color:#fff
+
+The annotation cannot describe that ordering, so ``system_executable`` stays ``str | None`` and a type checker asks
+every reader to narrow a value resolution has settled.
+:attr:`~python_discovery.PythonInfo.system_exe` closes that gap by falling back to
+:attr:`~python_discovery.PythonInfo.executable`, which is the value ``resolve_to_system`` writes anyway when a prefix
+links back to its own interpreter. Reading the raw field still tells the two states apart, which is what
+:meth:`~python_discovery.PythonInfo.from_exe` with ``resolve_to_host=False`` leaves you holding.
 
 How caching works
 -------------------
