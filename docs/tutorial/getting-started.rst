@@ -17,6 +17,7 @@ Before diving into code, here are the key ideas:
 - **Spec** -- a short string describing what you are looking for (e.g., ``python3.12``, ``pypy3.9``, ``>=3.11``).
 - **Discovery** -- the process of searching your system for an interpreter that matches a spec.
 - **Cache** -- a disk store that remembers previously discovered interpreters so the next lookup is instant.
+- **Resolution** -- following a virtual environment back to the base interpreter it was built from.
 
 Inspecting the current interpreter
 ------------------------------------
@@ -45,12 +46,18 @@ The simplest use case: get information about the Python that is running right no
    info = PythonInfo.current_system(cache)
 
    print(info.executable)        # /usr/bin/python3.12
+   print(info.system_exe)        # /usr/bin/python3.12
    print(info.version_info[:3])  # (3, 12, 1)
    print(info.implementation)    # CPython  (or PyPy, GraalPy, etc.)
    print(info.architecture)      # 64       (or 32)
 
 The returned :class:`~python_discovery.PythonInfo` object contains everything the library knows about that interpreter:
 paths, version numbers, sysconfig variables, platform details, and more.
+
+Run the same snippet from inside a virtual environment and the two paths part company.
+:attr:`~python_discovery.PythonInfo.executable` stays the environment's own ``python``, while
+:attr:`~python_discovery.PythonInfo.system_exe` names the base interpreter that environment was built from. Reach for
+``system_exe`` whenever you want the real install rather than a link to it.
 
 Finding a different interpreter
 --------------------------------

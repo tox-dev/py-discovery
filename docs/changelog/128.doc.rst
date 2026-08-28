@@ -1,0 +1,4 @@
+Document :attr:`~python_discovery.PythonInfo.system_exe` across the tutorial, the how-to guide and the explanation of
+how resolution reaches a base interpreter. The class diagram in the how-to guide had
+:attr:`~python_discovery.PythonInfo.system_executable` typed ``str`` rather than ``str | None`` - by
+:user:`gaborbernat`.
