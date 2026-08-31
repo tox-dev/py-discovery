@@ -133,6 +133,7 @@ lint.per-file-ignores."tests/**/*.py" = [
   "import-private-name",                  # private imports needed to test internal APIs
   "magic-value-comparison",               # Magic value used in comparison
   "private-member-access",                # private member access needed to test internals
+  "pytest-fixture-autouse",               # shared setup fixtures are meant to apply to every test
   "subprocess-without-shell-equals-true", # `subprocess` call: check for execution of untrusted input
   "suspicious-subprocess-import",         # subprocess import
   "too-many-arguments",                   # too many arguments (pytest fixtures)
